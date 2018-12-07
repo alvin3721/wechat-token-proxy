@@ -7,7 +7,7 @@ python version >= 3.5
 ## Usage
 run the token proxy and fetch "http://proxy-ip:80/"
 ```bash
-curl http://localhost:80/
+$ curl http://localhost:80/
 {"access_token":"16_FoD_IkcmZxmZ3IX4sciqaRGc3Ch3Y6nq0U-E2PfZiObUHSqGc0vMrhkm1ExkDDTewyKWaDS8qrcITCGknU4ew3wqWtLcWDeXOSVSXXzeRooApFkhjXwiGXjslD0J87S-Y5Sz7PwXjZkyqKLMIUYbABARDH","expire_in":6799}
 ```
 refresh the token 5 minutes before it expires, the old one still works for 5 minutes
@@ -33,7 +33,7 @@ git clone this repo, then execute
 ```bash
 $ cd wechat-token-proxy
 $ docker build -t wechat-token-proxy .
-$ docker run -d -p 80:80 -e APPID=<your APPID> -e APPSECRET=<your APPSECRET> wechat-token-proxy
+$ docker run -d -p 80:80 -v /etc/localtime:/etc/localtime:ro -e APPID=<your APPID> -e APPSECRET=<your APPSECRET> wechat-token-proxy
 ```
 
 ### add-ons
