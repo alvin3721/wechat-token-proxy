@@ -56,7 +56,7 @@ class AccessToken:
                 self.expire_at = time.time() + data['expires_in']
                 self.access_token = data['access_token']
                 self.logger.info(
-                    'New access_token: %s' % data['access_token']
+                    'new access_token: %s' % data['access_token']
                 )
         if self.lock.locked():
             self.lock.release()
@@ -105,7 +105,7 @@ def create_app():
 
 
 app = create_app()
-app.logger.setLevel(logging.CRITICAL)
+app.logger.setLevel(logging.INFO)
 
 access_token = AccessToken(appid, appsecret, app.logger)
 
