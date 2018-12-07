@@ -32,8 +32,8 @@ $ APPID=<your APPID> APPSECRET=<your APPSECRET> gunicorn --bind 0.0.0.0:80 --wor
 git clone this repo, then execute
 ```bash
 $ cd wechat-token-proxy
-$ docker build -t wecht-token-proxy .
-$ docker run -d -p 80:80 -e APPID=<your APPID> -e APPSECRET=<your APPSECRET> wecht-token-proxy
+$ docker build -t wechat-token-proxy .
+$ docker run -d -p 80:80 -e APPID=<your APPID> -e APPSECRET=<your APPSECRET> wechat-token-proxy
 ```
 
 ### add-ons
