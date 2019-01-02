@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 
+import json
 import logging
 import os
 import threading
@@ -21,8 +22,18 @@ class AccessToken:
         self.logger = logger
         self.threshold = threshold
         self.lock = threading.Lock()
-        self.access_token = None
-        self.expire_at = 0
+        token_dir = '/var/lib/wechat-token'
+        if not os.path.exists(token_dir):
+            os.mkdir(token_dir)
+        self.token_path = os.path.join(token_dir, 'token.json')
+        if os.path.exists(self.token_path):
+            with open(self.token_path, 'r') as f:
+                token = json.load(f)
+                self.access_token = token['access_token']
+                self.expire_at = token['expire_at']
+        else:
+            self.access_token = None
+            self.expire_at = 0
 
     def trigger(self):
         """return True when the update condition is met"""
@@ -55,6 +66,11 @@ class AccessToken:
                 # update local cache
                 self.expire_at = time.time() + data['expires_in']
                 self.access_token = data['access_token']
+                with open(self.token_path, 'w') as f:
+                    json.dump({
+                        'access_token': self.access_token,
+                        'expire_at': self.expire_at
+                    }, f)
                 self.logger.info(
                     'new access_token: %s' % data['access_token']
                 )
@@ -118,4 +134,4 @@ def get_access_token():
 
 if __name__ == '__main__':
 
-    app.run('0.0.0.0', 8080, debug=True, threaded=True, processes=1)
+    app.run('0.0.0.0', 80, debug=True, threaded=True, processes=1)
